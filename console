@@ -1,0 +1,9 @@
+<?php
+
+require __DIR__.'/vendor/autoload.php';
+
+use Dragon\PathEngine;
+
+$engine = new PathEngine();
+
+echo  gmp_strval($engine->run());
