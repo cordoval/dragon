@@ -34,13 +34,13 @@ class PathEngineCommand extends Command
     {
         $this->initDMatrix($this->d);
 
-        $output->writeln($this->f(0, self::length - 1, $output));
+        $output->writeln($this->f(0, self::length, $output));
     }
 
     public function initDMatrix()
     {
         foreach(range(0, self::nodes - 1) as $i) {
-            $this->d[$i] = array_fill(0, self::length, -1);
+            $this->d[$i] = array_fill(0, self::length + 1, -1);
         }
     }
 
