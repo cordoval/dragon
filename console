@@ -1,9 +1,9 @@
+#!/usr/bin/env php
 <?php
+
+use Dragon\DragonApplication;
 
 require __DIR__.'/vendor/autoload.php';
 
-use Dragon\PathEngine;
-
-$engine = new PathEngine();
-
-echo $engine->run();
+$application = new DragonApplication();
+$application->run();

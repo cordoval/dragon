@@ -2,6 +2,10 @@
 
 namespace Dragon;
 
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+
 /**
  * A dragon flies in a series of one-fifth circular arcs (72).
  * and with a free choice of a clockwise or an anticlockwise arch
@@ -12,18 +16,25 @@ namespace Dragon;
  * - both the starting and the end direction must be north
  * - all arcs must have the same radius
  */
-class PathEngine
+class PathEngineCommand extends Command
 {
     const length = 25;
     const nodes = 5;
 
     public $d;
 
-    public function run()
+    protected function configure()
+    {
+        $this
+            ->setName('path_engine_command')
+        ;
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->initDMatrix($this->d);
 
-        return $this->f(0, self::length - 1);
+        $output->writeln($this->f(0, self::length - 1, $output));
     }
 
     public function initDMatrix()
@@ -33,8 +44,12 @@ class PathEngine
         }
     }
 
-    public function f($x, $y)
+    public function f($x, $y, OutputInterface $output)
     {
+        $table = $this->getApplication()->getHelperSet()->get('table');
+        $table->setRows($this->d);
+        $table->render($output);
+
         if ($y < 0) {
             return 0;
         }
@@ -52,9 +67,11 @@ class PathEngine
             return $r;
         }
 
-        $r = $this->f(($x + 1) % self::nodes, $y - 1);
-        $r = $r + $this->f(($x - 1 + self::nodes) % self::nodes, $y - 1);
+        $r = $this->f(($x + 1) % self::nodes, $y - 1, $output);
+        $r = $r + $this->f(($x - 1 + self::nodes) % self::nodes, $y - 1, $output);
         $this->d[$x][$y] = $r;
+
+
 
         return $r;
     }

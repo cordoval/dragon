@@ -1,6 +1,7 @@
 {
     "require": {
-        "lstrojny/functional-php": "dev-master"
+        "lstrojny/functional-php": "dev-master",
+        "symfony/console": "~2.3"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
