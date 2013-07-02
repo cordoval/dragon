@@ -18,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class PathEngineCommand extends Command
 {
-    const length = 25;
+    const length = 5;
     const nodes = 5;
 
     public $d;
@@ -39,17 +39,13 @@ class PathEngineCommand extends Command
 
     public function initDMatrix()
     {
-        foreach(range(0, 5) as $i) {
+        foreach(range(0, self::nodes - 1) as $i) {
             $this->d[$i] = array_fill(0, self::length, -1);
         }
     }
 
     public function f($x, $y, OutputInterface $output)
     {
-        $table = $this->getApplication()->getHelperSet()->get('table');
-        $table->setRows($this->d);
-        $table->render($output);
-
         if ($y < 0) {
             return 0;
         }
@@ -71,7 +67,9 @@ class PathEngineCommand extends Command
         $r = $r + $this->f(($x - 1 + self::nodes) % self::nodes, $y - 1, $output);
         $this->d[$x][$y] = $r;
 
-
+        $table = $this->getApplication()->getHelperSet()->get('table');
+        $table->setRows($this->d);
+        $table->render($output);
 
         return $r;
     }
