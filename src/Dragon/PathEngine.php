@@ -23,7 +23,7 @@ class PathEngine
     {
         $this->initDMatrix($this->d);
 
-        return $this->f(0, self::length-1);
+        return $this->f(0, self::length - 1);
     }
 
     public function initDMatrix()
