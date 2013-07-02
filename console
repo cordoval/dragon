@@ -6,4 +6,4 @@ use Dragon\PathEngine;
 
 $engine = new PathEngine();
 
-echo  gmp_strval($engine->run());
+echo $engine->run();

@@ -4,12 +4,24 @@ namespace Dragon;
 
 class PathEngine
 {
-    const RIGHT = 1;
-    const LEFT = -1;
-    const length = 120;
+    const length = 25;
     const nodes = 5;
 
     public $d;
+
+    public function run()
+    {
+        $this->initDMatrix($this->d);
+
+        return $this->f(0, self::length);
+    }
+
+    public function initDMatrix()
+    {
+        foreach(range(0, 5) as $i) {
+            $this->d[$i] = array_fill(1, self::length, -1);
+        }
+    }
 
     public function f($x, $y)
     {
@@ -30,30 +42,11 @@ class PathEngine
             return $r;
         }
 
-        $r = 0;
-        $r = $r + $this->f(($x + 1) % self::nodes, $y - 1);
+        $r = $this->f(($x + 1) % self::nodes, $y - 1);
         $r = $r + $this->f(($x - 1 + self::nodes) % self::nodes, $y - 1);
+        $this->d[$x][$y] = $r;
 
         return $r;
-    }
-
-    public function run()
-    {
-        $this->initDMatrix();
-
-        $this->f(0, self::length);
-
-        //$totalPaths = gmp_fact(self::n);
-        //$hasSamefinalOrientation = function($path) {
-        //    return array_sum($path) % 5 == 0;
-        //};
-    }
-
-    public function initDMatrix()
-    {
-        foreach(range(0,100) as $i) {
-            $this->d[$i] = array_fill(1, 120, -1);
-        }
     }
 }
 
