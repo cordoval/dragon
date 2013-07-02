@@ -63,7 +63,8 @@ class PathEngineCommand extends Command
             return $r;
         }
 
-        $r = $this->f(($x + 1) % self::nodes, $y - 1, $output);
+        $r = 0;
+        $r = $r + $this->f(($x + 1) % self::nodes, $y - 1, $output);
         $r = $r + $this->f(($x - 1 + self::nodes) % self::nodes, $y - 1, $output);
         $this->d[$x][$y] = $r;
 
