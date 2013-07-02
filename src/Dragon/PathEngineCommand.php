@@ -58,21 +58,18 @@ class PathEngineCommand extends Command
             return 0;
         }
 
-        $r = $this->d[$x][$y];
-        if ($r != -1) {
-            return $r;
+        if ($this->d[$x][$y] != -1) {
+            return $this->d[$x][$y];
         }
 
-        $r = 0;
-        $r = $r + $this->f(($x + 1) % self::nodes, $y - 1, $output);
-        $r = $r + $this->f(($x - 1 + self::nodes) % self::nodes, $y - 1, $output);
-        $this->d[$x][$y] = $r;
+        $this->d[$x][$y] = 0;
+        $this->d[$x][$y] = $this->f(($x + 1) % self::nodes, $y - 1, $output) + $this->f(($x - 1 + self::nodes) % self::nodes, $y - 1, $output);
 
         $table = $this->getApplication()->getHelperSet()->get('table');
         $table->setRows($this->d);
         $table->render($output);
 
-        return $r;
+        return $this->d[$x][$y];
     }
 }
 
